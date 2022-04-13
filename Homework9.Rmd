@@ -16,7 +16,7 @@ library(tidyverse)
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
 ```
 
-The code below tidy's the data to make it easier to work with.
+The code below tidies the data to make it easier to work with.
 
 ```{r}
 av0 = av %>% filter(Name.Alias != "")
