@@ -5,6 +5,12 @@ date: "4/12/2022"
 output: html_document
 ---
 
+1. I worked on this assignment by myself
+2. https://github.com/MegGroat/Avengers.git
+
+
+3.
+
 ```{r}
 library(tidyverse)
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
