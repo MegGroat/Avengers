@@ -1,0 +1,39 @@
+---
+title: 'Homework #9'
+author: "Megan Groathouse"
+date: "4/12/2022"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
+```
+
+The code below tidy's the data to make it easier to work with.
+
+```{r}
+av0 = av %>% filter(Name.Alias != "")
+
+av1 = av0 %>% gather(key = time, value = death, c(11,13,15,17,19)) %>% select(Name.Alias, time, death) %>% mutate(time = parse_number(time))
+
+av2 = av0 %>% gather(key = time, value = return, c(12,14,16,18,20)) %>% select(Name.Alias, time, return) %>% mutate(time = parse_number(time))
+
+av.neat = left_join(av1, av2, by = c("Name.Alias", "time"))
+
+av.neat$death = replace(av.neat$death, av.neat$death == "", NA)
+
+av.neat$return = replace(av.neat$return, av.neat$return == "", NA)
+```
+
+I chose to validate the FiveThirtyEight statement, "I counted 89 total deaths." I wanted to use my data set to determine if 89 deaths actually did occur. I used the code below to answer this question:
+
+```{r}
+death_count = av.neat %>% filter(!is.na(av.neat$death)) %>% filter(death == "YES") 
+death_count = death_count %>% mutate(arrange(death_count, desc(time)))
+death_count = death_count %>% distinct(Name.Alias, .keep_all = TRUE)
+sum(death_count$time)
+```
+
+
+With the given data set I found that 82 deaths occured throughout the comic books. This differs from the FiveThirtyEight statement that claims 89 deaths occured.
